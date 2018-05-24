@@ -338,6 +338,7 @@ if mode == 'submit' and whichPartOfProcess == 'processMc02':
 		f.write("config.General.transferLogs = True\n")
 		f.write("config.JobType.pluginName = 'Analysis'\n")
 		f.write("config.JobType.maxMemoryMB = 2500\n")
+		f.write("config.JobType.maxJobRuntimeMin = 360\n")
 		if (simulationYear == 2016):
 			f.write("config.JobType.psetName = 'processMc02_genSimToAOD_step1of2_cfg.py'\n")
 		elif (simulationYear == 2017):
@@ -441,6 +442,7 @@ if mode == 'submit' and whichPartOfProcess == 'processMc03':
 		f.write("config.General.transferLogs = True\n")
 		f.write("config.JobType.pluginName = 'Analysis'\n")
 		f.write("config.JobType.maxMemoryMB = 2500\n")
+		f.write("config.JobType.maxJobRuntimeMin = 360\n")
 		if (simulationYear == 2016):
 			f.write("config.JobType.psetName = 'processMc03_genSimToAOD_step2of2_cfg.py'\n")
 		elif (simulationYear == 2017):
@@ -543,6 +545,7 @@ if mode == 'submit' and whichPartOfProcess == 'processMc04':
 		f.write("config.General.transferOutputs = True\n")
 		f.write("config.General.transferLogs = True\n")
 		f.write("config.JobType.pluginName = 'Analysis'\n")
+		f.write("config.JobType.maxJobRuntimeMin = 180\n")
 		if (simulationYear == 2016):
 			f.write("config.JobType.psetName = 'processMc04_AODToMINIAOD_cfg.py'\n")
 		elif (simulationYear == 2017):
