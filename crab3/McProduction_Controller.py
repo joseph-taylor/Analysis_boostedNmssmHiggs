@@ -31,10 +31,13 @@ whichPartOfProcess = 'processMc01' # turns madgraph LHE into cmssw GENSIM
 #-----------------------------------------------
 ##### INFO constant workflow INFO ##############
 madGraphProjects = [
-						'mH70p0_mSusy800p0_ratio0p99_splitting0p1_600000events',
-						'mH70p0_mSusy1600p0_ratio0p99_splitting0p1_600000events',
-						'mH70p0_mSusy2200p0_ratio0p99_splitting0p1_600000events',
-						'mH70p0_mSusy2400p0_ratio0p99_splitting0p1_600000events',
+						 'mH50p0_mSusy800p0_ratio0p99_splitting0p1_600000events',
+						 'mH50p0_mSusy1200p0_ratio0p99_splitting0p1_600001events',
+						 'mH50p0_mSusy1600p0_ratio0p99_splitting0p1_600000events',
+						 'mH50p0_mSusy2000p0_ratio0p99_splitting0p1_600003events',
+						 'mH50p0_mSusy2200p0_ratio0p99_splitting0p1_600000events',
+						 'mH50p0_mSusy2400p0_ratio0p99_splitting0p1_600000events',
+						 'mH50p0_mSusy2600p0_ratio0p99_splitting0p1_600001events',
 					]
 
 outputPrimaryDatasetIntro = 'nmssmSignalCascadeV05_13TeV2017'
@@ -88,7 +91,7 @@ totalNumberOfFilesPro03 = -1 # -1 to select them all
 ##### INFO 'processMc04' INFO ############## requires valid editionNamePro03
 editionNamePro04 = "ed94Xv1"
 
-filesPerJobPro04 = 3
+filesPerJobPro04 = 2
 totalNumberOfFilesPro04 = -1 # -1 to select them all
 #-------------------------------------------
 
@@ -338,7 +341,7 @@ if mode == 'submit' and whichPartOfProcess == 'processMc02':
 		f.write("config.General.transferLogs = True\n")
 		f.write("config.JobType.pluginName = 'Analysis'\n")
 		f.write("config.JobType.maxMemoryMB = 2500\n")
-		f.write("config.JobType.maxJobRuntimeMin = 360\n")
+		f.write("config.JobType.maxJobRuntimeMin = 500\n")
 		if (simulationYear == 2016):
 			f.write("config.JobType.psetName = 'processMc02_genSimToAOD_step1of2_cfg.py'\n")
 		elif (simulationYear == 2017):
@@ -442,7 +445,7 @@ if mode == 'submit' and whichPartOfProcess == 'processMc03':
 		f.write("config.General.transferLogs = True\n")
 		f.write("config.JobType.pluginName = 'Analysis'\n")
 		f.write("config.JobType.maxMemoryMB = 2500\n")
-		f.write("config.JobType.maxJobRuntimeMin = 360\n")
+		f.write("config.JobType.maxJobRuntimeMin = 500\n")
 		if (simulationYear == 2016):
 			f.write("config.JobType.psetName = 'processMc03_genSimToAOD_step2of2_cfg.py'\n")
 		elif (simulationYear == 2017):
@@ -545,7 +548,7 @@ if mode == 'submit' and whichPartOfProcess == 'processMc04':
 		f.write("config.General.transferOutputs = True\n")
 		f.write("config.General.transferLogs = True\n")
 		f.write("config.JobType.pluginName = 'Analysis'\n")
-		f.write("config.JobType.maxJobRuntimeMin = 180\n")
+		f.write("config.JobType.maxJobRuntimeMin = 500\n")
 		if (simulationYear == 2016):
 			f.write("config.JobType.psetName = 'processMc04_AODToMINIAOD_cfg.py'\n")
 		elif (simulationYear == 2017):
