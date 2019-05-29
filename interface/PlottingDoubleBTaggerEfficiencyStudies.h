@@ -17,6 +17,7 @@
 #include <TLatex.h>
 #include <TLine.h>
 #include <TLegend.h>
+#include <THStack.h>
 
 // CMSSW headers
 
@@ -57,6 +58,10 @@ private:
  	void effComparingWPsFncDR();
 	void effComparingEta();
 	void higgsBbDRdist();
+	void NEWPLOT();
+	void softDropJetMassVsDRBB();
+	void softDropJetMassVsMINZ();
+
 
 	// int SetColor(int position, int maxColors); // now get this function from seperate file
 	// TStyle * TDRStyle(); // now get this function from seperate file
@@ -96,23 +101,26 @@ PlottingDoubleBTaggerEfficiencyStudies::PlottingDoubleBTaggerEfficiencyStudies(s
 	// latex->SetTextAlign(31);
 
 	// make the .pdfs
- 	hBbMassDist();
- 	hBbSoftDropMassDist();
- 	deltaRMatchDist();
- 	deltaRMatchSoftDropDist();
- 	deltaRbbDist();
- 	fatJetEtaDist();
- 	fatJetVsHBbPtDist();
- 	softDropFatJetVsHBbPtDist();
- 	softDropJetMassVsBbDeltaR();
- 	fatJetMassVsBbDeltaR();
-	softDropJetMassVsHiggsPt();
-	softDropJetMassVsHiggsEta();
- 	effComparingWPs();
- 	softDropEffComparingWPs();
-	effComparingWPsFncDR();
- 	effComparingEta();
-	higgsBbDRdist();
+ // 	hBbMassDist();
+ // 	hBbSoftDropMassDist();
+ // 	deltaRMatchDist();
+ // 	deltaRMatchSoftDropDist();
+ // 	deltaRbbDist();
+ // 	fatJetEtaDist();
+ // 	fatJetVsHBbPtDist();
+ // 	softDropFatJetVsHBbPtDist();
+ // 	softDropJetMassVsBbDeltaR();
+ // 	fatJetMassVsBbDeltaR();
+	// softDropJetMassVsHiggsPt();
+	// softDropJetMassVsHiggsEta();
+ // 	effComparingWPs();
+ // 	softDropEffComparingWPs();
+	// effComparingWPsFncDR();
+ // 	effComparingEta();
+	// higgsBbDRdist();
+	NEWPLOT();
+	softDropJetMassVsDRBB();
+	softDropJetMassVsMINZ();
 }
 
 //-----------public-----------//
@@ -729,6 +737,94 @@ void PlottingDoubleBTaggerEfficiencyStudies::softDropJetMassVsHiggsPt()
 
 
 
+void PlottingDoubleBTaggerEfficiencyStudies::softDropJetMassVsDRBB()
+{
+	double defaultParam = tdrStyle->GetPadRightMargin();
+	tdrStyle->SetPadRightMargin(0.10);
+	for (std::vector<std::string>::size_type iWP=0; iWP<doubleBtagWPname.size(); ++iWP){
+		
+		TCanvas* c=new TCanvas("c","c");
+		TH2F * h2 = (TH2F*)f->Get("softDropJetMass_dRbb");
+
+		// SETUP HOW YOU WOULD LIKE THE PLOT (tdrStyle does most of this)
+		// h2->GetXaxis()->SetTitle("");
+		h2->GetXaxis()->SetTitleSize(0.06);
+		h2->GetXaxis()->SetLabelSize(0.05);	
+		// h2->GetYaxis()->SetTitle("");
+		h2->GetYaxis()->SetTitleSize(0.06);
+		h2->GetYaxis()->SetLabelSize(0.05);	
+		
+		h2->Draw("colz");
+
+		// Add diagnol line		
+		c->Update();
+		// TLine *line = new TLine(0,0,gPad->GetUxmax(),gPad->GetUymax());
+		// line->SetLineStyle(2);
+		// line->SetLineWidth(2);
+		// line->Draw();
+		// Add stamps
+		latex->SetTextAlign(11);
+		latex->DrawLatex(0.15,0.92,"#bf{CMS} #it{Simulation}");
+		latex->SetTextAlign(31);
+		latex->DrawLatex(0.92,0.92,"(13 TeV)");
+		// latex->DrawLatex(0.85, 0.75, Form("Tag > %s WP", doubleBtagWPname[iWP].c_str()));
+
+		std::string saveName = "softDropJetMassVsDRBB.pdf";
+		c->SaveAs(Form("%s%s", outputDirectory.c_str(), saveName.c_str()));
+		c->Close();
+
+	} // closes loop through Btag WP labels
+	tdrStyle->SetPadRightMargin(defaultParam);
+} // closes the function
+
+void PlottingDoubleBTaggerEfficiencyStudies::softDropJetMassVsMINZ()
+{
+	double defaultParam = tdrStyle->GetPadRightMargin();
+	tdrStyle->SetPadRightMargin(0.10);
+	for (std::vector<std::string>::size_type iWP=0; iWP<doubleBtagWPname.size(); ++iWP){
+		
+		TCanvas* c=new TCanvas("c","c");
+		TH2F * h2 = (TH2F*)f->Get("softDropJetMass_minPtFrac");
+
+		// SETUP HOW YOU WOULD LIKE THE PLOT (tdrStyle does most of this)
+		// h2->GetXaxis()->SetTitle("");
+		h2->GetXaxis()->SetTitleSize(0.06);
+		h2->GetXaxis()->SetLabelSize(0.05);	
+		// h2->GetYaxis()->SetTitle("");
+		h2->GetYaxis()->SetTitleSize(0.06);
+		h2->GetYaxis()->SetLabelSize(0.05);	
+		
+		h2->Draw("colz");
+
+		// Add diagnol line		
+		c->Update();
+		// TLine *line = new TLine(0,0,gPad->GetUxmax(),gPad->GetUymax());
+		// line->SetLineStyle(2);
+		// line->SetLineWidth(2);
+		// line->Draw();
+		// Add stamps
+		latex->SetTextAlign(11);
+		latex->DrawLatex(0.15,0.92,"#bf{CMS} #it{Simulation}");
+		latex->SetTextAlign(31);
+		latex->DrawLatex(0.92,0.92,"(13 TeV)");
+		// latex->DrawLatex(0.85, 0.75, Form("Tag > %s WP", doubleBtagWPname[iWP].c_str()));
+
+		std::string saveName = "softDropJetMassVsMINZ.pdf";
+		c->SaveAs(Form("%s%s", outputDirectory.c_str(), saveName.c_str()));
+		c->Close();
+
+	} // closes loop through Btag WP labels
+	tdrStyle->SetPadRightMargin(defaultParam);
+} // closes the function
+
+
+
+
+
+
+
+
+
 void PlottingDoubleBTaggerEfficiencyStudies::softDropJetMassVsHiggsEta()
 {
 	double defaultParam = tdrStyle->GetPadRightMargin();
@@ -1065,6 +1161,67 @@ void PlottingDoubleBTaggerEfficiencyStudies::higgsBbDRdist()
 	c->Close();	
 
 }
+
+
+
+
+void PlottingDoubleBTaggerEfficiencyStudies::NEWPLOT()
+{
+    TCanvas* c=new TCanvas("c","c"); 	
+
+	TH1F * h1 = (TH1F*)f->Get("softDropJetMass_drLessThan0p8");
+	TH1F * h2 = (TH1F*)f->Get("softDropJetMass_drMoreThan0p8");
+
+	TLegend * legend = new TLegend(0.2, 0.65, 0.5, 0.85); //(xmin, ymin, xmax, ymax)
+	legend->SetLineColor(0);
+	legend->AddEntry(h1, "dR(bb) < 0.8", "f");
+	legend->AddEntry(h2, "dR(bb) > 0.8", "f");
+
+
+	// SETUP HOW YOU WOULD LIKE THE PLOT (tdrStyle does most of this)
+	h1->SetLineWidth(0.0);
+	h2->SetLineWidth(0.0);
+	h1->SetFillColor(kRed);
+	h2->SetFillColor(kBlue);
+
+	// h1->GetXaxis()->SetTitle("");
+	h1->GetXaxis()->SetTitleSize(0.06);	
+	h1->GetXaxis()->SetLabelSize(0.05);
+	// h1->GetYaxis()->SetTitle("");
+	h1->GetYaxis()->SetTitleSize(0.06);
+	h1->GetYaxis()->SetLabelSize(0.05);
+	std::cout << h1->GetYaxis()->GetTitleOffset() << std::endl;
+	h1->GetYaxis()->SetTitleOffset(1.20);
+
+	// h2->GetXaxis()->SetTitle("");
+	h2->GetXaxis()->SetTitleSize(0.06);	
+	h2->GetXaxis()->SetLabelSize(0.05);
+	// h2->GetYaxis()->SetTitle("");
+	h2->GetYaxis()->SetTitleSize(0.06);
+	h2->GetYaxis()->SetLabelSize(0.05);
+
+	std::string hsTitles = Form("%s;%s;%s", h1->GetTitle(), h1->GetXaxis()->GetTitle(), h1->GetYaxis()->GetTitle());	
+	THStack * hs = new THStack("hs", hsTitles.c_str());
+	h1->Draw();
+	hs->Add(h2);
+	hs->Add(h1);
+	hs->Draw("same");
+
+	// Add stamps
+	latex->SetTextAlign(11); // align from left
+	latex->DrawLatex(0.15,0.92,"#bf{CMS} #it{Simulation}");
+	latex->SetTextAlign(31); // align from right
+	latex->DrawLatex(0.92,0.92,"(13 TeV)");
+
+	legend->Draw("same");
+	gPad->RedrawAxis();
+
+	std::string saveName = "aaSpecialPlot.pdf";
+	c->SaveAs(Form("%s%s", outputDirectory.c_str(), saveName.c_str()));
+	c->Close();	
+
+}
+
 
 
 
